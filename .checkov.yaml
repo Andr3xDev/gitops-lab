@@ -2,4 +2,10 @@ framework:
   - terraform
 compact: true
 quiet: true
-skip-check: []
+skip-check:
+  - CKV_AZURE_59          # El sitio web estático debe ser accesible desde internet, cerrar el acceso de red público lo dejaría inservible
+  - CKV2_AZURE_33         # Un endpoint privado agrega costo y complejidad que el laboratorio no necesita, y el sitio es público igual
+  - CKV2_AZURE_1          # El cifrado con claves de Microsoft es suficiente aquí, las claves propias exigirían un Key Vault con costo extra
+  - CKV_AZURE_206         # LRS es la opción más barata y el contenido se puede regenerar desde Git, no hay datos que perder
+  - CKV_AZURE_33          # El laboratorio no usa el servicio de colas, así que no hay actividad que registrar
+  - CKV2_AZURE_40         # Terraform sube el index.html con la clave de la cuenta, deshabilitarla rompería el despliegue
